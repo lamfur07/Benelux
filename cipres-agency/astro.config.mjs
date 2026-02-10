@@ -7,19 +7,32 @@ import react from '@astrojs/react';
 
 import sitemap from '@astrojs/sitemap';
 
-import vercel from '@astrojs/vercel';
+import netlify from '@astrojs/netlify';
 
-// https://astro.build/config
+//import vercel from '@astrojs/vercel';
+
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
-    ssr: {
-      noExternal: ['gsap']
-    }
+    ssr: { noExternal: ["gsap"] },
   },
-
   integrations: [react(), sitemap()],
-  site: 'https://cipres-agency.vercel.app',
-  output: 'server',
-  adapter: vercel(),
+  output: "server",
+  adapter: netlify(),
 });
+
+
+// https://astro.build/config
+// export default defineConfig({
+//   vite: {
+//     plugins: [tailwindcss()],
+//     ssr: {
+//       noExternal: ['gsap']
+//     }
+//   },
+
+//   integrations: [react(), sitemap()],
+//   site: 'https://cipres-agency.vercel.app',
+//   output: 'server',
+//   adapter: vercel(),
+// });
