@@ -3,9 +3,19 @@ import { Resend } from "resend";
 import { z } from 'astro:schema';
 // import { Redis } from "@upstash/redis";
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
-const resendEmail = import.meta.env.RESEND_EMAIL;
-const fromEmail = import.meta.env.FROM_EMAIL;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+
+if (!RESEND_API_KEY) {
+  throw new Error("Missing RESEND_API_KEY");
+}
+
+const resend = new Resend(RESEND_API_KEY);
+const resendEmail = process.env.RESEND_EMAIL;
+const fromEmail = process.env.FROM_EMAIL;
+
+if (!resendEmail || !fromEmail) {
+  throw new Error("Missing FROM_EMAIL or RESEND_EMAIL");
+}
 
 // Initialize Redis with Upstash
 // const redis = new Redis({

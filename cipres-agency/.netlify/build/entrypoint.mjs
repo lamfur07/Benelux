@@ -4,9 +4,16 @@ import * as z from 'zod';
 import { d as defineAction } from './chunks/server_0aDcHiHI.mjs';
 import { A as ActionError } from './chunks/shared_CxlMxdNA.mjs';
 
-const resend = new Resend("re_KUE1iq5u_8Gyaz62Ru5Db9WSpAgxCxBGx");
-const resendEmail = "uzairbawany7@gmail.com";
-const fromEmail = "onboarding@resend.dev";
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+if (!RESEND_API_KEY) {
+  throw new Error("Missing RESEND_API_KEY");
+}
+const resend = new Resend(RESEND_API_KEY);
+const resendEmail = process.env.RESEND_EMAIL;
+const fromEmail = process.env.FROM_EMAIL;
+if (!resendEmail || !fromEmail) {
+  throw new Error("Missing FROM_EMAIL or RESEND_EMAIL");
+}
 const server = {
   send: defineAction({
     accept: "form",
