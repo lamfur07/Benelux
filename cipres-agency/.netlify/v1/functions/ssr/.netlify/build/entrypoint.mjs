@@ -8,12 +8,12 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 if (!RESEND_API_KEY) {
   throw new Error("Missing RESEND_API_KEY");
 }
-const resend = new Resend(RESEND_API_KEY);
 const resendEmail = process.env.RESEND_EMAIL;
 const fromEmail = process.env.FROM_EMAIL;
 if (!resendEmail || !fromEmail) {
   throw new Error("Missing FROM_EMAIL or RESEND_EMAIL");
 }
+const resend = new Resend(RESEND_API_KEY);
 const server = {
   send: defineAction({
     accept: "form",
@@ -32,16 +32,20 @@ const server = {
         });
       }
       const { data, error } = await resend.emails.send({
-        from: resendEmail,
-        to: fromEmail,
+        from: `Benelux <${fromEmail}>`,
+        // MUST be a verified sender
+        to: resendEmail,
+        // your inbox
+        replyTo: email,
+        // reply will go to the user who filled the form
         subject: `New Contact from ${name}`,
         html: `
-              <h2>New Contact Message</h2>
-              <p><strong>Name:</strong> ${name}</p>
-              <p><strong>Email:</strong> ${email}</p>
-              <p><strong>Message:</strong></p>
-              <p>${message.replace(/\n/g, "<br>")}</p>
-            `,
+          <h2>New Contact Message</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message.replace(/\n/g, "<br>")}</p>
+        `,
         text: `New Contact Message
 
 Name: ${name}
@@ -51,12 +55,13 @@ Message:
 ${message}`
       });
       if (error) {
+        console.error("Resend error:", error);
         throw new ActionError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to send email. Please try again later."
+          message: error.message || "Failed to send email. Please try again later."
         });
       }
-      return { success: true, message: "Email sent successfully!", data: data.id };
+      return { success: true, message: "Email sent successfully!", data: data?.id };
     }
   })
 };
