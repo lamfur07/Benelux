@@ -1,0 +1,74 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Button from '@/components/ui/buttons/Button.astro';
+import { navItems } from '@/config/navItems.json';
+import { t } from '@/lib/utils';
+import { Home, Mail } from '@lucide/astro';
+---
+
+<Layout title={t('meta.404.title')} description={t('meta.404.description')}>
+  <section class="flex min-h-screen items-center justify-center px-4 py-20">
+    <div class="mx-auto max-w-3xl text-center">
+      <!-- Large 404 -->
+      <div class="mb-8">
+        <h1 class="font-anton-sc text-secondary text-[150px] leading-none md:text-[200px] lg:text-[250px]">
+          {t('404.h1')}
+        </h1>
+      </div>
+
+      <!-- Error Message -->
+      <div class="mb-12 space-y-6">
+        <h2 class="font-anton-sc text-accent text-4xl leading-tight uppercase md:text-5xl lg:text-6xl">
+          {t('404.h2')}
+        </h2>
+        <p class="text-muted mx-auto max-w-2xl font-sans text-lg md:text-xl">
+          {t('404.description')}
+        </p>
+      </div>
+
+      <!-- Navigation Options -->
+      <div class="mb-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button variant="primary" size="lg" class="w-full sm:w-auto">
+          <a href="/" class="flex items-center gap-2">
+            <Home size={24} />
+            <span>{t('404.back.btn')}</span>
+          </a>
+        </Button>
+        <Button variant="outline" size="lg" class="w-full sm:w-auto">
+          <a href="/contact" class="flex items-center gap-2">
+            <Mail size={24} />
+            <span>{t('404.contact.btn')}</span>
+          </a>
+        </Button>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="border-muted border-t pt-12">
+        <p class="text-muted font-grotesk mb-6 text-sm uppercase">
+          {t('404.quick.link')}
+        </p>
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {
+            navItems.map((item) => {
+              const IconComponent = item.icon;
+              return (
+                <a
+                  href={item.href}
+                  class="border-muted hover:border-secondary group rounded-lg border-2 p-4 transition-colors"
+                >
+                  {IconComponent && (
+                    <IconComponent
+                      class="text-muted group-hover:text-secondary mx-auto mb-2 transition-colors"
+                      size={38}
+                    />
+                  )}
+                  <p class="font-space-grotesk text-accent text-sm uppercase">{item.title}</p>
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

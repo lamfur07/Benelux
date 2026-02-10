@@ -8,14 +8,32 @@ interface Props {
   keywords?: string;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
 const {
   title = t('meta.index.title'),
   description = t('meta.index.description'),
   image = '/favicon.svg',
   keywords = t('meta.index.keywords'),
 } = Astro.props;
+
+// Canonical URL (safe for SSR/prerender)
+const canonicalURL = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).toString()
+  : Astro.url.toString();
+
+// Convert image to an absolute URL safely
+const imageURL = (() => {
+  if (!image) return null;
+
+  // Already absolute (http/https)
+  if (/^https?:\/\//i.test(image)) return image;
+
+  // Ensure site-relative path
+  const p = image.startsWith('/') ? image : `/${image}`;
+
+  // Prefer Astro.site if available, fall back to current request URL
+  const base = (Astro.site ?? Astro.url) as URL;
+  return new URL(p, base).toString();
+})();
 ---
 
 <!-- Global Metadata -->
@@ -37,16 +55,16 @@ const {
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={Astro.url.toString()} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:keywords" content={keywords} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+{imageURL && <meta property="og:image" content={imageURL} />}
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:url" content={Astro.url.toString()} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:keywords" content={keywords} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+{imageURL && <meta property="twitter:image" content={imageURL} />}

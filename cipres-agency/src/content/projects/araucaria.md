@@ -3,7 +3,7 @@ title: "QA Automation Framework"
 description: "Create and implement QA automation for a major shipyard"
 category: "Enterprise PLM"
 image: "/images/QA Automation.png"
-link: "https://agustincastets.vercel.app/en"
+# link: "https://agustincastets.vercel.app/en"
 yearFinished: 2025
 timeline: "28 weeks"
 tags: ["Selenium", "TestNG", "Zephyr", "Azure DevOps", "CI/CD Pipeline"]
