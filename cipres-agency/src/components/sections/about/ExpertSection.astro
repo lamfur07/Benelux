@@ -1,0 +1,71 @@
+---
+import { expertAreas } from '@/config/expertAreas.json';
+import { t } from '@/lib/utils';
+---
+
+<section id="expert-section" class="text-accent container mx-auto px-4 py-12 lg:py-24">
+  <!-- Top Heading -->
+  <h2 class="font-anton-sc mb-10 lg:mb-20 text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-8xl">
+    {t('about.expert.title')}
+  </h2>
+
+  <!-- Cards Grid -->
+  <div class="grid grid-cols-1 overflow-hidden border-2 border-white/10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+    {
+      expertAreas.map((item, index) => (
+        <div class="expert-card -mr-1 -mb-1 flex min-h-[320px] flex-col justify-between border-r-2 border-b-2 border-white/10 p-4 md:min-h-[380px] lg:min-h-[420px]">
+          <span class="font-anton-sc text-muted flex items-center text-3xl tracking-wide lg:text-5xl">
+            {(index + 1).toString().padStart(2, '0')}
+            <span class="bg-secondary m-1 h-2 w-2 self-end" />
+          </span>
+
+          <div class="space-y-4 md:space-y-6">
+            <h3 class="font-space-grotesk text-2xl leading-tight font-medium md:text-3xl">{item.title}</h3>
+            <p class="font-poppins text-muted text-base leading-relaxed md:text-lg">{item.description}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .expert-card {
+    will-change: opacity, clip-path;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import ScrollTrigger from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const section = document.querySelector('#expert-section');
+
+  if (section && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.expert-card',
+        {
+          opacity: 0,
+          clipPath: 'inset(0 0 100% 0)',
+        },
+        {
+          opacity: 1,
+          clipPath: 'inset(0 0 0% 0)',
+          duration: 0.8,
+          ease: 'power3.out',
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 60%',
+            once: true,
+          },
+        },
+      );
+    }, section);
+
+    window.addEventListener('astro:before-swap', () => ctx.revert());
+  }
+</script>

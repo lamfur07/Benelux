@@ -1,0 +1,34 @@
+export interface Testimonial {
+  name: string;
+  role: string;
+  company: string;
+  quote: string;
+  avatar?: string;
+}
+
+export const testimonials: Testimonial[] = [
+  {
+    name: 'Muhammad Ahmed',
+    role: 'CTO',
+    company: 'Avicenna AI',
+    quote:
+      'Benelux transformed our vision into a powerful, real-world AI platform that truly understands the needs of modern healthcare. Their expertise in intelligent automation and natural language systems helped us deliver meaningful impact for both doctors and patients. The team combined technical excellence with strategic insight, making them an invaluable partner in bringing Avicena to life.',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop',
+  },
+  {
+    name: 'Valeria Mendoza',
+    role: 'Marketing Lead',
+    company: 'Cicada',
+    quote:
+      'From branding to the website to social — everything was cohesive, strategic, and done with serious care.',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop',
+  },
+  {
+    name: 'Marica Sanchez',
+    role: 'Supervisor',
+    company: 'Shipyards',
+    quote:
+      'Benelux brought a new level of discipline and scalability to our QA process. Their automation framework significantly reduced manual effort while increasing our confidence in every release through continuous regression testing. What was once a reactive, time-consuming process is now a proactive and reliable system that supports our enterprise growth.',
+    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1770&auto=format&fit=crop',
+  },
+];

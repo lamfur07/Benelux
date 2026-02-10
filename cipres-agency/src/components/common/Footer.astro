@@ -1,0 +1,98 @@
+---
+import { t } from '@/lib/utils';
+import { navItems, footerOtherItems } from '@/config/navItems.json';
+import { contactInfo, socialLinks } from '@/config/socialLinks.json';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-primary-foreground relative z-40 overflow-hidden py-12 font-sans lg:py-4">
+  <div class="container mx-auto px-4">
+    <div class="lg:border-muted/15 grid grid-cols-1 lg:grid-cols-2 lg:border-b">
+      <!-- LEFT -->
+      <div class="md:border-muted/15 flex flex-col p-6 lg:border-r lg:p-20">
+        <p class="text-muted pb-3 text-base uppercase">
+          {t('footer.contact.description')}
+        </p>
+
+        <div class="pb-3">
+          <span class="text-muted block py-2 text-sm uppercase">(email)</span>
+          <a
+            href={`mailto:${contactInfo.email}`}
+            class="font-anton-sc text-accent hover:text-secondary text-2xl leading-none transition-colors md:text-3xl xl:text-5xl"
+          >
+            {contactInfo.email.toUpperCase()}
+          </a>
+        </div>
+        <div>
+          <span class="text-muted block py-2 text-sm uppercase">(phone)</span>
+          <a
+            href={`tel:${contactInfo.phone}`}
+            class="font-anton-sc text-accent hover:text-secondary text-2xl leading-none transition-colors md:text-3xl xl:text-4xl"
+          >
+            {contactInfo.phone.toUpperCase()}
+          </a>
+        </div>
+
+        <div class="mt-12 flex gap-3">
+          {
+            socialLinks.map((s) => {
+              const IconComponent = s.icon;
+              return (
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  class="text-accent hover:bg-secondary flex h-12 w-12 items-center justify-center rounded bg-white/10 text-sm transition-all duration-300"
+                >
+                  {IconComponent && <IconComponent class="text-accent" />}
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="font-space-grotesk flex flex-col p-6 lg:p-20">
+        <p class="text-muted mb-8 text-base uppercase">
+          {t('footer.explore')}
+        </p>
+
+        <nav class="flex flex-col">
+          {
+            navItems.map((link) => (
+              <a href={link.href} class="group text-accent relative block overflow-hidden">
+                <span class="bg-secondary absolute inset-0 z-0 translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0" />
+
+                <span class="relative z-10 flex items-center justify-between px-4 py-4 md:border-b md:border-white/10">
+                  <span class="text-base uppercase">{link.title}</span>
+                </span>
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="container mx-auto px-4">
+    <div
+      class="text-muted font-space-grotesk flex flex-col items-start gap-4 px-6 py-10 text-sm uppercase md:flex-row md:items-center md:justify-between lg:px-20"
+    >
+      <p>© {currentYear} {t('footer.copyright')}</p>
+
+      <div class="flex flex-col gap-3 md:flex-row md:gap-6">
+        {
+          footerOtherItems.map((link) => (
+            <a href={link.href} class="transition-colors hover:text-white">
+              {link.title}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</footer>

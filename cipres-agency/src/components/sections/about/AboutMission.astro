@@ -1,0 +1,188 @@
+---
+import { t } from '@/lib/utils';
+import teamImg from '/public/images/team-meeting.webp';
+---
+
+<section id="about-mission" class="bg-primary text-accent container mx-auto px-4 py-12 lg:py-24">
+  <!-- Heading -->
+  <h2 class="about-mission-title font-anton-sc mb-10 lg:mb-20 text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-8xl">
+    {t('about.mission.title')}
+  </h2>
+
+  <!-- Text Columns -->
+  <div class="text-muted mb-20 grid grid-cols-1 gap-6 lg:grid-cols-[1.5fr_1fr]">
+    <!-- Left Column -->
+    <div class="w-full">
+      <p class="about-mission-left font-space-grotesk text-xl leading-relaxed sm:text-2xl">
+        {t('about.mission.description.left')}
+      </p>
+    </div>
+
+    <!-- Right Column -->
+    <div class="max-w-sm self-end lg:justify-self-end">
+      <p class="about-mission-right font-space-grotesk text-xl leading-relaxed font-medium">
+        {t('about.mission.description.right')}
+      </p>
+    </div>
+  </div>
+
+  <!-- Team Image -->
+  <div class="about-mission-image mb-12 h-[400px] w-full overflow-hidden rounded-md sm:h-[600px]">
+    <img
+      src={teamImg.src}
+      alt={t('about.mission.alt.img')}
+      class="about-mission-image-inner h-full w-full object-cover"
+    />
+  </div>
+
+  <!-- Bottom Mission Statement -->
+  <div class="w-full">
+    <p class="about-mission-statement font-space-grotesk text-muted text-xl leading-relaxed sm:text-2xl">
+      {t('about.mission.statement')}
+    </p>
+  </div>
+</section>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  type SplitMode = 'chars' | 'words';
+
+  const section = document.querySelector<HTMLElement>('#about-mission');
+
+  const splitIntoSpans = (element: HTMLElement, mode: SplitMode): HTMLElement[] => {
+    const currentMode = element.dataset.splitMode;
+    if (currentMode === mode) {
+      return Array.from(element.querySelectorAll<HTMLElement>(':scope > span.split-part'));
+    }
+
+    const text = (element.textContent ?? '').trim();
+
+    element.dataset.splitOriginal = text;
+    element.dataset.splitMode = mode;
+    element.textContent = '';
+
+    const fragment = document.createDocumentFragment();
+    const parts = mode === 'chars' ? Array.from(text) : text.split(/(\s+)/).filter(Boolean);
+    const spans: HTMLElement[] = [];
+
+    for (const part of parts) {
+      if (/^\s+$/.test(part)) {
+        fragment.append(document.createTextNode(part));
+        continue;
+      }
+
+      const span = document.createElement('span');
+      span.className = `split-part inline-block ${mode === 'chars' ? 'split-char' : 'split-word'}`;
+      span.textContent = part;
+      fragment.append(span);
+      spans.push(span);
+    }
+
+    element.append(fragment);
+    return spans;
+  };
+
+  const restoreSplit = (element: HTMLElement): void => {
+    const original = element.dataset.splitOriginal;
+    if (original == null) return;
+
+    element.textContent = original;
+    delete element.dataset.splitOriginal;
+    delete element.dataset.splitMode;
+  };
+
+  if (section && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const title = section.querySelector<HTMLElement>('.about-mission-title');
+    const left = section.querySelector<HTMLElement>('.about-mission-left');
+    const right = section.querySelector<HTMLElement>('.about-mission-right');
+    const statement = section.querySelector<HTMLElement>('.about-mission-statement');
+    const imageWrap = section.querySelector<HTMLElement>('.about-mission-image');
+    const imageInner = section.querySelector<HTMLElement>('.about-mission-image-inner');
+
+    const revertFns: Array<() => void> = [];
+    const isMobile = window.matchMedia('(max-width: 640px)').matches;
+
+    const ctx = gsap.context(() => {
+      if (title) {
+        splitIntoSpans(title, isMobile ? 'words' : 'chars');
+        revertFns.push(() => restoreSplit(title));
+      }
+
+      if (left) {
+        splitIntoSpans(left, 'words');
+        revertFns.push(() => restoreSplit(left));
+      }
+
+      if (right) {
+        splitIntoSpans(right, 'words');
+        revertFns.push(() => restoreSplit(right));
+      }
+
+      if (statement) {
+        splitIntoSpans(statement, 'words');
+        revertFns.push(() => restoreSplit(statement));
+      }
+
+      const tl = gsap.timeline({
+        defaults: { ease: 'power3.out' },
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 70%',
+          once: true,
+        },
+      });
+
+      if (title) {
+        tl.from(title.querySelectorAll<HTMLElement>(':scope > span.split-part'), {
+          yPercent: 120,
+          opacity: 0,
+          duration: 1.05,
+          stagger: 0.016,
+        });
+      }
+
+      const revealWords = (element: HTMLElement, position?: string) => {
+        tl.from(
+          element.querySelectorAll<HTMLElement>(':scope > span.split-part'),
+          {
+            y: 26,
+            opacity: 0,
+            duration: 0.75,
+            stagger: 0.01,
+          },
+          position,
+        );
+      };
+
+      if (left) revealWords(left, '-=0.55');
+      if (right) revealWords(right, '-=0.72');
+
+      if (imageWrap) {
+        tl.fromTo(
+          imageWrap,
+          { opacity: 0, clipPath: 'inset(0 0 100% 0)' },
+          { opacity: 1, clipPath: 'inset(0 0 0% 0)', duration: 0.9 },
+          '-=0.5',
+        );
+      }
+
+      if (imageInner) {
+        tl.fromTo(imageInner, { scale: 1.12 }, { scale: 1, duration: 1.15, ease: 'power2.out' }, '<');
+      }
+
+      if (statement) revealWords(statement, '-=0.7');
+    }, section);
+
+    const onBeforeSwap = (): void => {
+      ctx.revert();
+      for (const fn of revertFns) fn();
+      window.removeEventListener('astro:before-swap', onBeforeSwap);
+    };
+
+    window.addEventListener('astro:before-swap', onBeforeSwap);
+  }
+</script>

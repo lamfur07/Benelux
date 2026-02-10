@@ -1,0 +1,165 @@
+---
+import { contactInfo } from '@/config/socialLinks.json';
+import ContactForm from './ContactForm.astro';
+import { t } from '@/lib/utils';
+---
+
+<section id="contact" class="bg-primary-foreground text-accent flex items-center lg:h-dvh">
+  <div class="container mx-auto px-4 py-24 lg:py-32">
+    <div class="grid items-start gap-14 lg:grid-cols-[1fr_1.25fr] lg:gap-12">
+      <div class="contact-left space-y-10">
+        <div class="space-y-5">
+          <h1
+            class="contact-title font-anton-sc text-accent text-[72px] leading-[0.9] tracking-tight sm:text-[96px] lg:text-[132px]"
+          >
+            <span class="contact-title-line block max-w-lg">{t('contact.title')}</span>
+          </h1>
+        </div>
+
+        <p class="contact-desc text-muted font-space-grotesk max-w-md text-base leading-relaxed sm:text-xl">
+          {t('contact.description')}
+        </p>
+      </div>
+
+      <div class="contact-right space-y-10">
+        <ContactForm />
+
+        <div class="contact-visit space-y-6 border-t border-white/10 pt-9">
+          <h2 class="font-space-grotesk text-accent text-3xl font-semibold">{t('contact.visit')}</h2>
+
+          <div class="grid gap-10 md:grid-cols-2">
+            <div class="space-y-3">
+              <p class="text-muted text-sm tracking-widest uppercase">{t('contact.address')}</p>
+              <p class="font-space-grotesk text-accent text-lg leading-relaxed">
+                {contactInfo.address.street},<br />
+                {contactInfo.address.city},<br />
+                {contactInfo.address.country}
+              </p>
+            </div>
+
+            <div class="space-y-3">
+              <p class="text-muted text-sm tracking-widest uppercase">{t('contact.hours')}</p>
+              <p class="font-space-grotesk text-accent text-lg leading-relaxed">
+                {contactInfo.workingHours}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Hide elements initially to prevent flash before GSAP animation */
+  .contact-title-line,
+  .contact-desc,
+  .contact-right form,
+  .contact-visit {
+    visibility: hidden;
+  }
+
+  .contact-title-line {
+    will-change: transform, opacity;
+  }
+
+  .contact-desc,
+  .contact-right,
+  .contact-visit {
+    will-change: transform, opacity, clip-path;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import ScrollTrigger from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let contactCtx: gsap.Context | null = null;
+
+  const initContact = () => {
+    // Clear previous context and ScrollTriggers
+    if (contactCtx) {
+      contactCtx.revert();
+      contactCtx = null;
+    }
+
+    const section = document.querySelector<HTMLElement>('#contact');
+    if (!section) return;
+
+    // Reset all animated elements
+    const elements = ['.contact-title-line', '.contact-desc', '.contact-right form', '.contact-visit'];
+
+    elements.forEach((selector) => {
+      const els = document.querySelectorAll(selector);
+      els.forEach((el) => {
+        gsap.set(el, { clearProps: 'all' });
+        (el as HTMLElement).style.visibility = 'hidden';
+      });
+    });
+
+    // If the user prefers reduced motion, show everything immediately
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      elements.forEach((selector) => {
+        const els = document.querySelectorAll(selector);
+        els.forEach((el) => {
+          (el as HTMLElement).style.visibility = 'visible';
+        });
+      });
+      return;
+    }
+
+    // Create new GSAP context
+    contactCtx = gsap.context(() => {
+      const tl = gsap.timeline({
+        defaults: { ease: 'power3.out' },
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 75%',
+          once: true,
+        },
+      });
+
+      tl.from('.contact-title-line', {
+        y: 120,
+        autoAlpha: 0,
+        duration: 1.05,
+        stagger: 0.1,
+      })
+        .from(
+          '.contact-desc',
+          {
+            y: 28,
+            autoAlpha: 0,
+            duration: 0.75,
+          },
+          '-=0.55',
+        )
+        .from(
+          '.contact-right form',
+          {
+            y: 28,
+            autoAlpha: 0,
+            duration: 0.75,
+          },
+          '-=0.55',
+        )
+        .from(
+          '.contact-visit',
+          {
+            autoAlpha: 0,
+            clipPath: 'inset(0 0 100% 0)',
+            duration: 0.8,
+          },
+          '-=0.45',
+        );
+    }, section);
+  };
+
+  // Run on page load
+  initContact();
+
+  // Run after each Astro navigation
+  document.addEventListener('astro:page-load', initContact);
+</script>

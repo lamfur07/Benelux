@@ -1,0 +1,94 @@
+---
+import { testimonials } from '@/config/testimonials.json';
+import { t } from '@/lib/utils';
+import scribble from '/public/gifs/scribble4.gif';
+import { Quote } from '@lucide/astro';
+---
+
+<section id="testimonials-section" class="w-full py-12 lg:py-32">
+  <div class="text-accent container mx-auto px-4">
+    <!-- Header -->
+    <div class="mb-12 px-2 md:mb-16">
+      <h2 class="font-anton-sc flex justify-between text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-8xl">
+        <span>{t('index.testimonials.title')}</span>
+        <img src={scribble.src} alt="" class="hidden h-24 w-auto object-contain md:block" />
+      </h2>
+      <p class="font-poppins text-muted mt-4 max-w-xl text-lg opacity-80 md:text-2xl">
+        {t('index.testimonials.description')}
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-2 lg:grid-cols-3">
+      {
+        testimonials.map((item) => (
+          <div class="testimonial-card border-muted/20 flex min-h-[350px] flex-col justify-between border-2 p-4 sm:min-h-[400px] sm:p-6">
+            {/* User Info */}
+            <div class="flex items-center gap-3 sm:gap-4">
+              <div class="h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/5 sm:h-16 sm:w-16">
+                {item.avatar ? (
+                  <img src={item.avatar} alt={item.name} class="h-full w-full object-cover" />
+                ) : (
+                  <div class="bg-secondary/20 h-full w-full" />
+                )}
+              </div>
+              <div class="font-poppins min-w-0">
+                <h4 class="text-accent truncate text-base font-medium sm:text-xl">{item.name}</h4>
+                <p class="text-muted line-clamp-1 text-sm sm:text-base">
+                  {item.role} of {item.company}
+                </p>
+              </div>
+            </div>
+
+            {/* Quote */}
+            <div class="z-10 mt-6">
+              <Quote class="text-secondary mb-2 font-serif text-3xl sm:mb-1 sm:text-5xl" />
+              <p class="font-poppins text-accent text-base leading-relaxed sm:text-lg lg:text-xl">{item.quote}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <style>
+    .testimonial-card {
+      will-change: opacity, transform;
+    }
+  </style>
+
+  <script>
+    import gsap from 'gsap';
+    import ScrollTrigger from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const section = document.querySelector('#testimonials-section');
+
+    if (section && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const ctx = gsap.context(() => {
+        gsap.fromTo(
+          '.testimonial-card',
+          {
+            opacity: 0,
+            y: 40,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            stagger: 0.2,
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 65%',
+              once: true,
+            },
+          }
+        );
+      }, section);
+
+      window.addEventListener('astro:before-swap', () => ctx.revert());
+    }
+  </script>
+</section>

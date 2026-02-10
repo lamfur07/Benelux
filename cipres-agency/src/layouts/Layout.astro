@@ -1,0 +1,55 @@
+---
+import Navbar from '@/components/ui/nav/Navbar.astro';
+import Footer from '@/components/common/Footer.astro';
+import BaseHead from '@/components/common/BaseHead.astro';
+import '../styles/global.css';
+
+const { title, description, image, keywords } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} image={image} keywords={keywords} />
+  </head>
+  <body class="bg-primary font-poppins" transition:animate="fade">
+    <Navbar />
+    <slot />
+    <Footer />
+  </body>
+</html>
+<script>
+  import Lenis from 'lenis';
+
+  // Initialize Lenis in the client
+  let lenisInstance: Lenis | null = null;
+
+  export function initLenis() {
+    if (typeof window === 'undefined' || lenisInstance) return;
+
+    lenisInstance = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      touchMultiplier: 2,
+    });
+
+    function raf(time: number) {
+      lenisInstance?.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Expose instance globally for debugging
+    (window as any).lenis = lenisInstance;
+  }
+
+  // Auto-initialize when the DOM is ready
+  if (typeof window !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLenis);
+    } else {
+      initLenis();
+    }
+  }
+</script>

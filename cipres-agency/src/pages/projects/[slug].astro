@@ -1,0 +1,197 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import { getCollection } from 'astro:content';
+import Button from '@/components/ui/buttons/Button.astro';
+import TableOfContents from '@/components/ui/nav/TableOfContents';
+import ProjectCard from '@/components/ui/cards/ProjectCard.astro';
+import CTABanner from '@/components/common/CTABanner.astro';
+import { ArrowLeft } from '@lucide/astro';
+import { t } from '@/lib/utils';
+
+export const prerender = true;
+
+export const getStaticPaths = (async () => {
+  const projects = await getCollection('projects');
+
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}) satisfies GetStaticPaths;
+
+const { project } = Astro.props;
+const { Content, headings } = await render(project);
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects.sort((a, b) => b.data.yearFinished - a.data.yearFinished);
+
+const currentIndex = sortedProjects.findIndex((p) => p.id === project.id);
+
+let nextProjects = [];
+
+if (sortedProjects.length > 1) {
+  const totalProjects = sortedProjects.length;
+  const nextIndex = (currentIndex + 1) % totalProjects;
+  const prevIndex = (currentIndex - 1 + totalProjects) % totalProjects;
+
+  if (nextIndex !== currentIndex) {
+    nextProjects.push(sortedProjects[nextIndex]);
+  }
+
+  if (prevIndex !== currentIndex && nextProjects.length < 2) {
+    nextProjects.push(sortedProjects[prevIndex]);
+  }
+}
+---
+
+<Layout title={project.data.title} description={project.data.description} image={project.data.image}>
+  <article id="top" class="text-accent px-4 py-28">
+    <div class="mx-auto max-w-6xl">
+      <Button href="/projects" variant="ghost" size="none" class="py-8">
+        <ArrowLeft size={20} />
+        <span class="font-space-grotesk">{t('projects.back')}</span>
+      </Button>
+      <header class="mb-12">
+        <h1 class="font-anton-sc text-4xl tracking-wider uppercase md:text-6xl lg:text-7xl">
+          {project.data.title}
+        </h1>
+      </header>
+
+      <div class="mb-16 overflow-hidden rounded-3xl">
+        <img
+          src={project.data.image}
+          alt={project.data.title}
+          class="h-[300px] w-full object-cover md:h-[500px] lg:h-[600px]"
+        />
+      </div>
+
+      <!-- Project Metadata & Description -->
+      <div class="mb-16">
+        <div class="grid gap-8 md:grid-cols-[minmax(260px,320px)_auto_1.6fr] md:gap-12">
+          <!-- Left Column: Metadata -->
+          <div class="grid gap-8 md:grid-cols-[1fr_1fr]">
+            <!-- Industry & Services -->
+            <div class="space-y-6">
+              <div>
+                <h3 class="mb-2 text-sm tracking-wider uppercase opacity-60">
+                  {t('projects.metadata.industry')}
+                </h3>
+                <p class="font-space-grotesk text-lg">
+                  {project.data.category}
+                </p>
+              </div>
+
+              {
+                project.data.tags?.length > 0 && (
+                  <div>
+                    <h3 class="mb-2 text-sm tracking-wider uppercase opacity-60">{t('projects.metadata.services')}</h3>
+                    <ul class="font-space-grotesk space-y-1">
+                      {project.data.tags.map((tag: string) => (
+                        <li class="text-base opacity-90">{tag}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              }
+            </div>
+
+            <!-- Timeline & Year -->
+            <div class="space-y-6">
+              {
+                project.data.timeline && (
+                  <div>
+                    <h3 class="mb-2 text-sm tracking-wider uppercase opacity-60">{t('projects.metadata.timeline')}</h3>
+                    <p class="font-space-grotesk text-lg">{project.data.timeline}</p>
+                  </div>
+                )
+              }
+
+              <div>
+                <h3 class="mb-2 text-sm tracking-wider uppercase opacity-60">
+                  {t('projects.metadata.yearFinished')}
+                </h3>
+                <p class="font-space-grotesk text-lg">
+                  {project.data.yearFinished}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="hidden w-px bg-white/20 md:block"></div>
+
+          <!-- Right Column: Description -->
+          <div class="flex flex-col justify-between gap-8">
+            <p class="font-space-grotesk max-w-[65ch] text-xl leading-relaxed opacity-90 md:text-2xl">
+              {project.data.description}
+            </p>
+
+            <!-- {
+              project.data.link && (
+                <div>
+                  <Button href={project.data.link} target="_blank" rel="noopener noreferrer">
+                    {t('projects.visitProjects')}
+                  </Button>
+                </div>
+              )
+            } -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Markdown Content with TOC -->
+      <div class="grid gap-8 lg:grid-cols-[1fr_minmax(200px,280px)] lg:gap-12">
+        <!-- Table of Contents (appears first on mobile) -->
+        <aside class="order-1 lg:order-2">
+          <TableOfContents
+            client:load
+            headings={headings}
+            menuText={t('projects.toc.menu')}
+            onThisPageText={t('projects.toc.onThisPage')}
+          />
+        </aside>
+
+        <!-- Main Content (appears second on mobile) -->
+        <div class="project-content order-2 min-w-0 lg:order-1">
+          <Content />
+        </div>
+      </div>
+      <div class="mt-12 flex justify-center">
+        <Button href="#top" variant="ghost" size="lg" class="underline underline-offset-4">
+          {t('projects.scrollTop')}
+        </Button>
+      </div>
+
+      <!-- More Works Section -->
+      {
+        nextProjects.length > 0 && (
+          <section class="mt-24">
+            <div class="mb-12 flex flex-col items-center justify-between gap-4 md:flex-row">
+              <h2 class="font-anton-sc text-3xl tracking-wider uppercase md:text-4xl lg:text-5xl">
+                {t('projects.moreWorks')}
+              </h2>
+              <Button href="/projects" variant="primary">
+                {t('projects.viewAll')}
+              </Button>
+            </div>
+
+            <div class="grid gap-8 md:grid-cols-2">
+              {nextProjects.map((nextProject) => (
+                <ProjectCard
+                  id={nextProject.id}
+                  title={nextProject.data.title}
+                  category={nextProject.data.category}
+                  image={nextProject.data.image}
+                  showArrow={false}
+                />
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </div>
+  </article>
+  <CTABanner />
+</Layout>

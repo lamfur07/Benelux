@@ -1,0 +1,187 @@
+---
+import eyeGif from '/public/gifs/eye.gif';
+import underlineGif from '/public/gifs/underline.gif';
+import underline2Gif from '/public/gifs/underline2.gif';
+import Mouse from '@/icons/mouse.svg';
+import Arrow from '@/icons/arrow.svg';
+import { t } from '@/lib/utils';
+---
+
+<section class="text-accent relative min-h-dvh overflow-hidden">
+  <div class="relative z-10 mx-auto grid min-h-dvh max-w-[1400px] grid-rows-[1fr_auto] px-8">
+    <!-- Main headline -->
+    <div class="relative flex items-center justify-center">
+      <!-- Left branding (desktop only) -->
+      <div
+        class="hero-side font-space-grotesk absolute top-1/2 left-0 hidden -translate-y-1/2 leading-tight capitalize lg:block"
+      >
+        <span>{t('index.hero.creative')}</span><br />
+        <span>{t('index.hero.studio')}</span>
+        <img src={underline2Gif.src} alt="" class="mt-2 w-[70px] opacity-80" />
+      </div>
+
+      <!-- Right arrow (desktop only) -->
+      <div class="hero-side absolute top-1/2 right-0 hidden h-[60px] w-[60px] -translate-y-1/2 lg:block">
+        <Arrow class="text-accent h-full w-full rotate-45" />
+      </div>
+
+      <!-- Headline -->
+      <div class="text-center">
+        <h1 class="hero-title font-anton-sc space-y-2 leading-[0.9] tracking-tighter">
+          <span class="block text-5xl sm:text-6xl md:text-7xl lg:text-[9rem]"> {t('index.hero.headline.we.are')} </span>
+          <span class="block text-5xl sm:text-6xl md:text-7xl lg:text-[9rem]">
+            {t('index.hero.headline.full.service')}
+          </span>
+
+          <!-- Decorative arrow (xl only) -->
+          <div class="hero-deco absolute top-2/5 right-[420px] hidden h-[86px] w-[86px] -translate-y-1/2 xl:block">
+            <img src={eyeGif.src} alt="" class="h-full w-full object-contain" />
+          </div>
+
+          <div class="mt-4 flex flex-col items-center gap-6 md:flex-row md:items-start md:gap-9">
+            <span class="relative text-5xl sm:text-6xl md:text-7xl lg:text-[9rem]">
+              {t('index.hero.headline.agency')}
+              <img
+                src={underlineGif.src}
+                alt=""
+                class="pointer-events-none absolute bottom-[-20px] left-0 w-full opacity-80"
+              />
+            </span>
+
+            <p
+              class="hero-desc font-space-grotesk max-w-sm text-center text-base leading-relaxed sm:text-lg md:mt-6 md:text-left lg:text-xl"
+            >
+              {t('index.hero.agency.description')}
+            </p>
+          </div>
+        </h1>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="hero-scroll flex flex-col items-center gap-4 pb-10">
+      <Mouse />
+      <span class="font-space-grotesk text-xs tracking-widest text-white/60 uppercase">
+        {t('index.hero.scroll.text')}
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- GSAP -->
+<script>
+  import gsap from 'gsap';
+
+  let heroTimeline: gsap.core.Timeline | null = null;
+
+  const initHero = () => {
+    // Clear previous timeline if it exists
+    if (heroTimeline) {
+      heroTimeline.kill();
+      heroTimeline = null;
+    }
+
+    // Reset all animated elements
+    const elements = ['.hero-title span', '.hero-desc', '.hero-side', '.hero-deco', '.hero-scroll'];
+
+    elements.forEach((selector) => {
+      const els = document.querySelectorAll(selector);
+      els.forEach((el) => {
+        gsap.set(el, { clearProps: 'all' });
+        (el as HTMLElement).style.visibility = 'hidden';
+      });
+    });
+
+    // If the user prefers reduced motion, show everything immediately
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      elements.forEach((selector) => {
+        const els = document.querySelectorAll(selector);
+        els.forEach((el) => {
+          (el as HTMLElement).style.visibility = 'visible';
+        });
+      });
+      return;
+    }
+
+    // Create new timeline
+    heroTimeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    heroTimeline
+      .from('.hero-title span', {
+        y: 120,
+        autoAlpha: 0,
+        duration: 1.2,
+        stagger: 0.12,
+      })
+      .from(
+        '.hero-desc',
+        {
+          y: 40,
+          autoAlpha: 0,
+          duration: 0.8,
+        },
+        '-=0.4',
+      )
+      .from(
+        '.hero-side',
+        {
+          x: (i) => (i === 0 ? -40 : 40),
+          autoAlpha: 0,
+          duration: 0.8,
+          stagger: 0.2,
+        },
+        '-=0.6',
+      )
+      .from(
+        '.hero-deco',
+        {
+          scale: 0.6,
+          autoAlpha: 0,
+          duration: 0.8,
+        },
+        '-=0.6',
+      )
+      .from(
+        '.hero-scroll',
+        {
+          y: 20,
+          autoAlpha: 0,
+          duration: 0.6,
+        },
+        '-=0.4',
+      );
+  };
+
+  // Run on page load
+  initHero();
+
+  // Run after each Astro navigation
+  document.addEventListener('astro:page-load', initHero);
+</script>
+
+<style>
+  /* Hide elements initially to prevent flash before GSAP animation */
+  .hero-title span,
+  .hero-desc,
+  .hero-side,
+  .hero-deco,
+  .hero-scroll {
+    visibility: hidden;
+  }
+
+  @keyframes scroll-wheel {
+    0%,
+    100% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(12px);
+    }
+  }
+
+  .animate-scroll-wheel {
+    animation: scroll-wheel 2s ease-in-out infinite;
+  }
+</style>

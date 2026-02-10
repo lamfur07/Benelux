@@ -1,0 +1,84 @@
+---
+import { steps } from '@/config/workProcess.json';
+import { t } from '@/lib/utils';
+---
+
+<section id="process-section" class="text-accent">
+  <div class="container mx-auto px-6 py-12 lg:py-32">
+    <div class="grid grid-cols-1 gap-16 lg:grid-cols-[420px_1fr]">
+      <div class="px-2">
+        <h2 class="font-anton-sc text-5xl leading-[1.1] lg:text-6xl xl:text-9xl">
+          {t('index.process.title')}
+          <span class="mt-3 block lg:mt-10">
+            <img src="/gifs/scribble.gif" alt="gift" class="h-12 w-auto sm:h-24 sm:w-auto" />
+          </span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 border-2 border-white/10 md:grid-cols-2 xl:grid-cols-4">
+        {
+          steps.map((item, index) => (
+            <div
+              class={`step-item flex min-h-[420px] flex-col justify-between p-4 md:p-6 ${
+                index < steps.length - 1
+                  ? 'border-b border-white/10 md:border-b-0 md:odd:border-r-2 xl:border-r-2 xl:last:border-r-0'
+                  : ''
+              } ${index < steps.length - 2 ? 'md:border-b-2 xl:border-b-0' : ''}`}
+            >
+              <span class="font-anton-sc text-muted flex items-center text-2xl tracking-wide">
+                {item.step}
+                <span class="bg-secondary m-1 h-1 w-1 self-end leading-none" />
+              </span>
+
+              <div class="space-y-6">
+                <h3 class="font-space-grotesk text-2xl xl:text-3xl leading-tight font-medium" set:html={item.title} />
+
+                <p class="font-poppins text-muted max-w-[28ch] text-base leading-relaxed md:text-lg">{item.text}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .step-item {
+    will-change: opacity, clip-path;
+  }
+</style>
+<script>
+  import gsap from 'gsap';
+  import ScrollTrigger from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const section = document.querySelector('#process-section');
+
+  if (section && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.step-item',
+        {
+          opacity: 0,
+          clipPath: 'inset(0 0 100% 0)',
+        },
+        {
+          opacity: 1,
+          clipPath: 'inset(0 0 0% 0)',
+          duration: 0.8,
+          ease: 'power3.out',
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 60%',
+            once: true,
+          },
+        }
+      );
+    }, section);
+
+    window.addEventListener('astro:before-swap', () => ctx.revert());
+  }
+</script>

@@ -1,0 +1,19 @@
+---
+import { t } from '@/lib/utils';
+import ServicesList from './ServicesList';
+import asteriskGif from '/public/gifs/doble-arrow.gif';
+---
+
+<section class="bg-primary text-accent container mx-auto flex flex-col justify-center px-4 py-12 md:py-24">
+  <div class="mb-12 px-2 md:mb-16">
+    <h2 class="font-anton-sc flex justify-between text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-8xl">
+      <span class="max-w-5xl" >{t('index.service.title')}</span>
+      <img src={asteriskGif.src} alt="" class="h-auto w-16 object-contain" />
+    </h2>
+    <p class="font-poppins text-muted mt-4 max-w-3xl text-lg opacity-80 md:text-2xl">
+      {t('index.service.description')}
+    </p>
+  </div>
+
+  <ServicesList client:load />
+</section>

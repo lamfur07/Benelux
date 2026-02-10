@@ -1,0 +1,111 @@
+---
+import { t } from '@/lib/utils';
+import { teamMembers, getSocialIcon } from '@/config/team.json';
+
+---
+
+<section id="team-section" class="text-accent py-12 lg:py-24 overflow-hidden container mx-auto px-4">
+  <!-- Header -->
+  <div class="mb-20 space-y-4">
+    <h2 class="font-anton-sc text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-8xl">
+      {t('about.team.title')}
+    </h2>
+    <p class="font-space-grotesk text-muted text-xl leading-relaxed sm:text-2xl max-w-4xl">
+      {t('about.team.description')}
+    </p>
+  </div>
+
+  <!-- Team Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    
+    {teamMembers.map((member) => (
+      <div class="team-card group relative overflow-hidden rounded-lg border-3 border-white/10 flex flex-col h-full">
+        <!-- Image Container -->
+        <div class="aspect-square w-full overflow-hidden shrink-0">
+          <img
+            src={member.image}
+            alt={member.name}
+            class="h-full w-full object-cover"
+          />
+        </div>
+        <!-- Content Overlay/Bottom -->
+        <div class="p-6 bg-primary-foreground grow flex flex-col justify-between">
+          <h3 class="font-space-grotesk text-2xl font-bold mb-6 text-white">{member.name}</h3>
+          
+          <div class="flex items-center justify-between border-t border-white/10 pt-4 mt-auto">
+            <div class="flex items-center gap-3">
+              <span class="h-2 w-2 bg-secondary" />
+              <span class="font-space-grotesk text-xs tracking-wider text-muted uppercase">
+                {member.role}
+              </span>
+            </div>
+            {member.socials.length > 0 && (
+              <div class="flex items-center gap-3">
+                {member.socials.map((social) => {
+                  const Icon = getSocialIcon(social.platform);
+                  return (
+                    <a 
+                      href={social.url} 
+                      class="text-muted hover:text-secondary transition-colors" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      aria-label={`${member.name} on ${social.platform}`}
+                    >
+                      <Icon class="h-5 w-5" />
+                    </a>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .team-card {
+    will-change: transform, opacity;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import ScrollTrigger from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const section = document.querySelector('#team-section');
+
+  if (section && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const ctx = gsap.context(() => {
+      // Header Animation
+      gsap.from('h2', {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 60%',
+        },
+      });
+
+      // Cards Animation
+      gsap.from('.team-card', {
+        y: 60,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.team-card',
+          start: 'top 70%',
+        },
+      });
+    }, section);
+
+    window.addEventListener('astro:before-swap', () => ctx.revert());
+  }
+</script>

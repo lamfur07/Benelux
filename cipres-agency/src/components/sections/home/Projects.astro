@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { ProjectsList } from './ProjectsList';
+import { t } from '@/lib/utils';
+import Button from '@/components/ui/buttons/Button.astro';
+import { ArrowRight } from '@lucide/astro';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section class="text-accent relative container mx-auto px-4 py-12 lg:py-32">
+  <div class="mb-12 flex flex-col items-center justify-between space-y-9 lg:space-y-4 px-2 lg:mb-16 lg:flex-row">
+    <div>
+      <h2 class="font-anton-sc flex justify-between text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-8xl">
+        <span>{t('index.projects.title')}</span>
+      </h2>
+      <p class="font-poppins text-muted mt-4 max-w-3xl text-lg opacity-80 md:text-2xl">
+        {t('index.projects.description')}
+      </p>
+    </div>
+    <Button href="/projects" variant="primary">
+      <span class="font-space-grotesk">{t('index.projects.btn')}</span>
+      <ArrowRight size={20} />
+    </Button>
+  </div>
+  <div id="projects">
+    <ProjectsList projects={projects} client:load />
+  </div>
+</section>

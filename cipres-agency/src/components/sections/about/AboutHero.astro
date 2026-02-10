@@ -1,0 +1,242 @@
+---
+import { t } from '@/lib/utils';
+import asterisk from '/public/gifs/asterisk.gif';
+import underline from '/public/gifs/underline.gif';
+import scribble from '/public/gifs/scribble3.gif';
+---
+
+<section
+  id="about-hero"
+  class="bg-primary text-accent relative container mx-auto flex min-h-screen flex-col justify-center px-4 py-24"
+>
+  <div class="relative z-10">
+    <!-- Title Section -->
+    <div class="relative mb-12 w-full sm:mb-20">
+      <h1
+        class="about-hero-title font-anton-sc text-accent text-[80px] leading-[0.9] tracking-tight sm:text-[120px] lg:text-[160px]"
+      >
+        {t('about.hero.title')}
+      </h1>
+      <!-- Decorative Asterisk near title -->
+      <div class="pointer-events-none absolute -top-4 left-[280px] hidden sm:left-[400px] md:block lg:left-[550px]">
+        <img src={asterisk.src} alt="gift" class="h-12 w-12 sm:h-16 sm:w-16" />
+      </div>
+    </div>
+
+    <!-- Content Blocks with Staggered Layout -->
+    <div class="flex w-full flex-col gap-12 md:gap-28">
+      <!-- First Paragraph (Left Aligned) -->
+      <div class="relative max-w-2xl self-start">
+        <p class="about-hero-desc font-space-grotesk text-accent/90 text-xl leading-snug sm:text-2xl lg:text-3xl">
+          {t('about.hero.description')}
+        </p>
+      </div>
+
+      <!-- Second Paragraph (Right Aligned) -->
+      <div class="relative mt-12 max-w-2xl self-end text-left sm:text-right lg:mt-0">
+        <p class="about-hero-desc-2 font-space-grotesk text-accent/90 text-xl leading-snug sm:text-2xl lg:text-3xl">
+          {t('about.hero.second.description')}
+        </p>
+
+        <!-- Decorative Underline -->
+        <div class="pointer-events-none absolute right-0 -bottom-8 flex w-full justify-end">
+          <img src={underline.src} alt="gift" class="w-32 sm:w-48" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subtle Background Element -->
+  <div class="pointer-events-none absolute bottom-10 left-10 hidden lg:block">
+    <img src={scribble.src} alt="gift" class="h-48 w-48" />
+  </div>
+</section>
+
+<style>
+  /* Hide elements initially to prevent flash before GSAP animation */
+  .about-hero-title,
+  .about-hero-desc,
+  .about-hero-desc-2 {
+    visibility: hidden;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  type SplitMode = 'chars' | 'words';
+
+  let cleanupFn: (() => void) | null = null;
+
+  const initAboutHero = () => {
+    // Clear any previous animation
+    if (cleanupFn) {
+      cleanupFn();
+      cleanupFn = null;
+    }
+
+    const section = document.querySelector<HTMLElement>('#about-hero');
+    if (!section) return;
+
+    const title = section.querySelector<HTMLElement>('.about-hero-title');
+    const desc1 = section.querySelector<HTMLElement>('.about-hero-desc');
+    const desc2 = section.querySelector<HTMLElement>('.about-hero-desc-2');
+
+    // Reset elements completely
+    const resetElement = (element: HTMLElement | null) => {
+      if (!element) return;
+
+      // Restore original text if it exists
+      const original = element.dataset.splitOriginal;
+      if (original) {
+        element.textContent = original;
+        delete element.dataset.splitOriginal;
+        delete element.dataset.splitMode;
+      }
+
+      // Reset GSAP styles
+      gsap.set(element, { clearProps: 'all' });
+      element.style.visibility = 'hidden';
+    };
+
+    resetElement(title);
+    resetElement(desc1);
+    resetElement(desc2);
+
+    const splitIntoSpans = (element: HTMLElement, mode: SplitMode): HTMLElement[] => {
+      const text = (element.textContent ?? '').trim();
+
+      element.dataset.splitOriginal = text;
+      element.dataset.splitMode = mode;
+      element.textContent = '';
+
+      const fragment = document.createDocumentFragment();
+      const parts = mode === 'chars' ? Array.from(text) : text.split(/(\s+)/).filter(Boolean);
+      const spans = [];
+
+      for (const part of parts) {
+        if (/^\s+$/.test(part)) {
+          fragment.append(document.createTextNode(part));
+          continue;
+        }
+
+        const span = document.createElement('span');
+        span.className = `split-part inline-block ${mode === 'chars' ? 'split-char' : 'split-word'}`;
+        span.textContent = part;
+        fragment.append(span);
+        spans.push(span);
+      }
+
+      element.append(fragment);
+      return spans;
+    };
+
+    const restoreSplit = (element: HTMLElement): void => {
+      const original = element.dataset.splitOriginal;
+      if (original == null) return;
+
+      element.textContent = original;
+      delete element.dataset.splitOriginal;
+      delete element.dataset.splitMode;
+    };
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const revertFns: Array<() => void> = [];
+      const isMobile = window.matchMedia('(max-width: 640px)').matches;
+
+      const ctx = gsap.context(() => {
+        if (title) {
+          splitIntoSpans(title, isMobile ? 'words' : 'chars');
+          revertFns.push(() => restoreSplit(title));
+        }
+
+        if (desc1) {
+          splitIntoSpans(desc1, 'words');
+          revertFns.push(() => restoreSplit(desc1));
+        }
+
+        if (desc2) {
+          splitIntoSpans(desc2, 'words');
+          revertFns.push(() => restoreSplit(desc2));
+        }
+
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        if (title) {
+          gsap.set(title, { visibility: 'visible' });
+          tl.from(title.querySelectorAll<HTMLElement>(':scope > span.split-part'), {
+            yPercent: 120,
+            autoAlpha: 0,
+            duration: 1.1,
+            stagger: isMobile ? 0.04 : 0.018,
+          });
+        }
+
+        if (desc1) {
+          gsap.set(desc1, { visibility: 'visible' });
+          tl.from(
+            desc1.querySelectorAll<HTMLElement>(':scope > span.split-part'),
+            {
+              y: 28,
+              autoAlpha: 0,
+              duration: 0.8,
+              stagger: 0.012,
+            },
+            '-=0.55',
+          );
+        }
+
+        if (desc2) {
+          gsap.set(desc2, { visibility: 'visible' });
+          tl.from(
+            desc2.querySelectorAll<HTMLElement>(':scope > span.split-part'),
+            {
+              y: 28,
+              autoAlpha: 0,
+              duration: 0.8,
+              stagger: 0.012,
+            },
+            '-=0.7',
+          );
+        }
+      }, section);
+
+      // Save cleanup function
+      cleanupFn = () => {
+        ctx.revert();
+        for (const fn of revertFns) fn();
+
+        // Ensure elements are visible after cleanup
+        if (title) {
+          gsap.set(title, { clearProps: 'all' });
+          title.style.visibility = '';
+        }
+        if (desc1) {
+          gsap.set(desc1, { clearProps: 'all' });
+          desc1.style.visibility = '';
+        }
+        if (desc2) {
+          gsap.set(desc2, { clearProps: 'all' });
+          desc2.style.visibility = '';
+        }
+      };
+    } else {
+      // If reduce motion is enabled, show elements immediately
+      if (title) {
+        title.style.visibility = 'visible';
+      }
+      if (desc1) {
+        desc1.style.visibility = 'visible';
+      }
+      if (desc2) {
+        desc2.style.visibility = 'visible';
+      }
+    }
+  };
+
+  // Run on page load
+  initAboutHero();
+
+  // Run after each Astro navigation
+  document.addEventListener('astro:page-load', initAboutHero);
+</script>
