@@ -419,7 +419,7 @@ All text content and translations for the website.
 ```typescript
 export const labels = {
   // Navigation
-  'company.name': 'Benelux Global Solutions',
+  'company.name': 'TNI Professionals',
   
   // Hero Section
   'index.hero.headline.we.are': 'WE ARE',

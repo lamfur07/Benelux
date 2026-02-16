@@ -10,9 +10,9 @@ export const faqItems: FaqItem[] = [
       'We begin with a discovery session to understand your business goals, technical environment, and growth plans. From there, we define a structured roadmap and execution strategy.',
   },
   {
-    question: "What industries does Benelux work with?",
+    question: "What industries does TNI work with?",
     answer:
-      'We’ve worked with clients across healthcare, manufacturing, fintech, e-commerce, and more. Our team’s diverse experience allows us to adapt our approach to fit the unique needs of each industry.',
+      'We’ve worked with clients across local school districts (K-12), healthcare, manufacturing, fintech, e-commerce, and more. Our team’s diverse experience allows us to adapt our approach to fit the unique needs of each industry.',
   },
   {
     question: 'Do you build custom software or work with existing systems?',

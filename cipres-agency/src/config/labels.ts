@@ -1,6 +1,6 @@
 // labels.ts - Only text
 export const labels = {
-  'company.name': 'Benelux Global Solutions',
+  'company.name': 'TNI Professionals',
 
   // Hero Section
   'index.hero.creative': 'Creative',
@@ -37,12 +37,12 @@ export const labels = {
   'projects.metadata.timeline': 'Timeline',
 
   // About Page
-  'about.hero.title': 'About Benelux.',
-  'about.hero.description': 'Built for enterprise impact, Benelux is more than a digital agency; we are your strategic technology partners in building secure, scalable, and intelligent systems.',
+  'about.hero.title': 'About TNI.',
+  'about.hero.description': 'Built for enterprise impact, TNI is more than a digital agency; we are your strategic technology partners in building secure, scalable, and intelligent systems.',
   'about.hero.second.description': 'Our mission is to engineer digital solutions that perform flawlessly and scale confidently. With expertise in web development, QA automation, ERP consulting, cybersecurity, and AI, we push the boundaries of performance, reliability, and innovation in every project we deliver.',
 
   'about.mission.title': 'We\'re here to engineer digital systems that scale with confidence.',
-  'about.mission.description.left': 'We transform complex technical challenges into secure, high-performance solutions. At Benelux, every project is a strategic partnership, every system is engineered with precision, and every line of code is built with scalability, security, and long-term impact in mind.',
+  'about.mission.description.left': 'We transform complex technical challenges into secure, high-performance solutions. At TNI, every project is a strategic partnership, every system is engineered with precision, and every line of code is built with scalability, security, and long-term impact in mind.',
   'about.mission.description.right': 'We\'re technology partners who believe in clarity, reliability, and delivering measurable results.',
   'about.mission.statement': ' Founded with a vision to redefine design through a modern and friendly lens, we\'ve become more than just a design agency; we\'re a community of kindred spirits who share a passion for artistry and innovation.',
   'about.mission.alt.img': 'Diverse creative team working together in a modern studio',
