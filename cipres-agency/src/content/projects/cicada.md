@@ -19,6 +19,7 @@ The client was facing several obstacles in maintaining a secure and scalable sec
 * Gaps in identity protection, increasing the risk of account compromise
 * Lack of centralized logging and monitoring, slowing incident detection
 * Need for seamless, phased deployment without disrupting operations
+
 The client required an experienced partner capable of deploying and configuring security technologies efficiently while also modernizing their environment.
 
 ## Our Solution
@@ -30,6 +31,7 @@ TNI led the end-to-end deployment of critical security capabilities tailored to 
 * Centralized logging and monitoring enablement to improve real-time visibility.
 * Validation, tuning, and post-deployment optimization.
 * Training and knowledge transfer for the client’s internal team.
+
 Each solution was deployed in phases with attention to minimal disruption and long-term maintainability.
 
 ## Key Features
@@ -47,4 +49,5 @@ Our deployment initiative enabled the client to:
 * Enhance monitoring visibility, resulting in faster detection times.
 * Strengthen compliance alignment with industry security frameworks.
 * Lay the foundation for long-term cybersecurity maturity.
+
 The implemented solutions provided immediate improvements while setting the stage for scalable, future-proof security operations.
