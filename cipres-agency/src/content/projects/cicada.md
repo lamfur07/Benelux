@@ -1,31 +1,50 @@
 ---
-title: "ERP/Cybersecurity"
-description: "Personal Portfolio Website for talented design engineer"
-category: "Portfolio"
+title: "Deployment of Security Sol"
+description: "Deployed a suite of modern security solutions across identity, endpoints, and cloud infrastructure"
+category: "Cybersecurity"
 image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1955&auto=format&fit=crop"
-link: "https://agustincastets.vercel.app/en"
-yearFinished: 2023
-timeline: "4 weeks"
-tags: ["Astro", "Tailwind CSS", "Framer Motion", "TypeScript"]
+# link: "https://agustincastets.vercel.app/en"
+yearFinished: 2025
+timeline: "6 weeks"
+tags: ["Compliance", "Configuration", "Security Architecture", "Deployment"]
 ---
 
 ## Project Overview
-Cicada is an elite design engineer who needed a platform to showcase projects that blend visual aesthetics with complex engineering. Our agency was tasked with creating a digital experience that feels like an extension of his own work: precise, innovative, and visually striking.
+TNI partnered with the client to enhance their security posture by deploying a suite of modern security solutions across identity, endpoints, and cloud infrastructure. The goal was to strengthen defenses, reduce attack surface, and provide the organization with consistent, centralized control of its security environment.
 
 ## Client Challenges
-The main challenge was the duality of the content. The site had to appeal to both Art Directors (looking for aesthetics) and Technical Directors (looking for code rigor). The previous website was too generic and failed to communicate the client's unique value, resulting in a low contact rate for high-budget projects.
+The client was facing several obstacles in maintaining a secure and scalable security program:
+* Fragmented security tools, resulting in inconsistent visibility
+* Legacy configurations that no longer aligned with best practices
+* Gaps in identity protection, increasing the risk of account compromise
+* Lack of centralized logging and monitoring, slowing incident detection
+* Need for seamless, phased deployment without disrupting operations
+The client required an experienced partner capable of deploying and configuring security technologies efficiently while also modernizing their environment.
 
 ## Our Solution
-* **Dual-Purpose Architecture:** We designed a navigation system that allows for visual exploration through "Showcases," while providing the option to expand into technical "Deep Dives" with optimized diagrams and code blocks.
-* **Precision Micro-interactions:** Using **Framer Motion**, we created smooth page transitions and hover states that respond to mouse movement, reinforcing the feel of a "well-built" product.
-* **Brutal Performance:** By using **Astro**, we eliminated all unnecessary client-side JavaScript, allowing complex animations to run at a consistent 60fps without affecting load times.
+TNI led the end-to-end deployment of critical security capabilities tailored to the client’s environment. Our approach included:
+* Security architecture review to ensure proper alignment between business needs and technical controls.
+* Deployment of identity security enhancements, including MFA, conditional access, and privileged access safeguards.
+* Endpoint security solution rollout with standardized policies and automated threat protection.
+* Cloud security configuration, including posture management, access governance, and workload protections.
+* Centralized logging and monitoring enablement to improve real-time visibility.
+* Validation, tuning, and post-deployment optimization.
+* Training and knowledge transfer for the client’s internal team.
+Each solution was deployed in phases with attention to minimal disruption and long-term maintainability.
 
 ## Key Features
-* **Adaptive Bento Grid:** A dynamic layout that organizes projects based on their importance and image format, optimizing visual space.
-* **Technical Reading Mode:** A toggle that changes the UI to an information-dense format, ideal for reviewing technical documentation.
-* **Asset Optimization:** We implemented a phased loading system for heavy 3D renders, ensuring users can browse without interruptions.
+* Modern Access Control using identity-driven security policies.
+* Unified Endpoint Protection with advanced threat detection.
+* Strengthened Cloud Security Posture through proactive safeguards.
+* Centralized SIEM/SOAR Integration for improved detection and response.
+* Comprehensive Deployment Documentation and operational guides.
 
 ## Results & Impact
-* **Brand Growth:** The client reported a 40% increase in inquiries for "Senior/Lead" roles following the relaunch.
-* **Performance:** Achieved 100/100 scores across all Lighthouse metrics (Performance, Accessibility, SEO).
-* **Authority:** The site was widely shared on LinkedIn and Twitter by industry leaders, positioning Arjuna as a thought leader in his niche.
+Our deployment initiative enabled the client to:
+* Achieve standardized, enterprise-wide security controls.
+* Significantly reduce exposure to identity-based threats.
+* Improve endpoint resilience with automated remediation capabilities.
+* Enhance monitoring visibility, resulting in faster detection times.
+* Strengthen compliance alignment with industry security frameworks.
+* Lay the foundation for long-term cybersecurity maturity.
+The implemented solutions provided immediate improvements while setting the stage for scalable, future-proof security operations.
