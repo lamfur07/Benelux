@@ -16,7 +16,7 @@ export const teamMembers: TeamMember[] = [
   {
     name: 'Ayesha Sufyan',
     role: 'CEO, Co-FOUNDER',
-    image: '/images/team/oliver.webp',
+    image: '/images/team/audrey.webp',
     socials: [
       { platform: 'linkedin', url: 'https://www.linkedin.com/' },
       { platform: 'instagram', url: 'https://www.instagram.com/' },
@@ -31,58 +31,58 @@ export const teamMembers: TeamMember[] = [
       { platform: 'linkedin', url: 'https://www.linkedin.com/' },
       { platform: 'instagram', url: 'https://www.instagram.com/' },
       { platform: 'twitter', url: 'https://www.twitter.com/' },
-    ],
-  },
-  {
-    name: 'Mohammad Uzair Bawany',
-    role: 'Technical Projects Lead',
-    image: '/images/team/ethan.webp',
-    socials: [
-      { platform: 'linkedin', url: 'https://www.linkedin.com/' },
-      { platform: 'instagram', url: 'https://www.instagram.com/' },
-      { platform: 'twitter', url: 'https://www.twitter.com/' },
-    ],
-  },
-  {
-    name: 'Arsal Arif',
-    role: 'Procurement Lead',
-    image: '/images/team/audrey.webp',
-    socials: [
-      { platform: 'linkedin', url: 'https://www.linkedin.com/' },
-      { platform: 'instagram', url: 'https://www.instagram.com/' },
-      { platform: 'twitter', url: 'https://www.twitter.com/' },
-    ],
-  },
-  {
-    name: 'Muhammad Gigani',
-    role: 'Partnerships Manager',
-    image: '/images/team/audrey.webp',
-    socials: [
-      { platform: 'linkedin', url: 'https://www.linkedin.com/' },
-      { platform: 'instagram', url: 'https://www.instagram.com/' },
-      { platform: 'twitter', url: 'https://www.twitter.com/' },
-    ],
-  },
-  {
-    name: 'Zayyan',
-    role: 'Cybersecurity Lead',
-    image: '/images/team/audrey.webp',
-    socials: [
-      { platform: 'linkedin', url: 'https://www.linkedin.com/' },
-      { platform: 'instagram', url: 'https://www.instagram.com/' },
-      { platform: 'twitter', url: 'https://www.twitter.com/' },
-    ],
-  },
-  {
-    name: 'Ibrahim Ali Khan',
-    role: 'ERP Solutions Lead',
-    image: '/images/team/audrey.webp',
-    socials: [
-      { platform: 'linkedin', url: 'https://www.linkedin.com/' },
-      { platform: 'instagram', url: 'https://www.instagram.com/' },
-      { platform: 'twitter', url: 'https://www.twitter.com/' },
     ]
   }
+  // {
+  //   name: 'Mohammad Uzair Bawany',
+  //   role: 'Technical Projects Lead',
+  //   image: '/images/team/ethan.webp',
+  //   socials: [
+  //     { platform: 'linkedin', url: 'https://www.linkedin.com/' },
+  //     { platform: 'instagram', url: 'https://www.instagram.com/' },
+  //     { platform: 'twitter', url: 'https://www.twitter.com/' },
+  //   ],
+  // },
+  // {
+  //   name: 'Arsal Arif',
+  //   role: 'Procurement Lead',
+  //   image: '/images/team/audrey.webp',
+  //   socials: [
+  //     { platform: 'linkedin', url: 'https://www.linkedin.com/' },
+  //     { platform: 'instagram', url: 'https://www.instagram.com/' },
+  //     { platform: 'twitter', url: 'https://www.twitter.com/' },
+  //   ],
+  // },
+  // {
+  //   name: 'Muhammad Gigani',
+  //   role: 'Partnerships Manager',
+  //   image: '/images/team/audrey.webp',
+  //   socials: [
+  //     { platform: 'linkedin', url: 'https://www.linkedin.com/' },
+  //     { platform: 'instagram', url: 'https://www.instagram.com/' },
+  //     { platform: 'twitter', url: 'https://www.twitter.com/' },
+  //   ],
+  // },
+  // {
+  //   name: 'Zayyan',
+  //   role: 'Cybersecurity Lead',
+  //   image: '/images/team/audrey.webp',
+  //   socials: [
+  //     { platform: 'linkedin', url: 'https://www.linkedin.com/' },
+  //     { platform: 'instagram', url: 'https://www.instagram.com/' },
+  //     { platform: 'twitter', url: 'https://www.twitter.com/' },
+  //   ],
+  // },
+  // {
+  //   name: 'Ibrahim Ali Khan',
+  //   role: 'ERP Solutions Lead',
+  //   image: '/images/team/audrey.webp',
+  //   socials: [
+  //     { platform: 'linkedin', url: 'https://www.linkedin.com/' },
+  //     { platform: 'instagram', url: 'https://www.instagram.com/' },
+  //     { platform: 'twitter', url: 'https://www.twitter.com/' },
+  //   ]
+  // }
 ];
 
 import { Linkedin, Instagram, Twitter } from '@lucide/astro'; // o tus iconos
