@@ -17,10 +17,10 @@ export const testimonials: Testimonial[] = [
   },
   {
     name: 'Valeria Mendoza',
-    role: 'Marketing Lead',
-    company: 'Cicada',
+    role: 'Director of Infrastructure and Security',
+    company: 'Cybersecurity Inc.',
     quote:
-      'From branding to the website to social — everything was cohesive, strategic, and done with serious care.',
+      'TNI Professionals demonstrated exceptional expertise and professionalism throughout our security transformation initiative. Their team took the time to understand our environment and delivered a well-structured, phased deployment that significantly strengthened our overall security posture without disrupting our operations.',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop',
   },
   {
