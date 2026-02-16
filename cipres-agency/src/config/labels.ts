@@ -75,38 +75,38 @@ export const labels = {
   '404.quick.link': 'Or explore these pages:',
 
   // --- INDEX / HOME ---
-'meta.index.title': 'Benelux Global Solutions | Enterprise Software, QA Automation & AI Engineering',
-'meta.index.description': 'Benelux Global Solutions is an enterprise software engineering firm specializing in scalable web development, QA automation, ERP implementation, and cybersecurity. We build secure, high-performance digital systems that scale with confidence.',
-'meta.index.keywords': 'Benelux Global Solutions, Enterprise Software Development, QA Automation, Selenium Automation, ERP Implementation, ARAS PLM, Azure DevOps, Cybersecurity Solutions, AI Engineering, Scalable Web Applications, React Development, Node.js Backend, Digital Transformation, Automation Frameworks',
+'meta.index.title': 'TNI Professionals | Enterprise Software, QA Automation & AI Engineering',
+'meta.index.description': 'TNI is an enterprise software engineering firm specializing in scalable web development, QA automation, ERP implementation, and cybersecurity. We build secure, high-performance digital systems that scale with confidence.',
+'meta.index.keywords': 'TNI Professionals, Enterprise Software Development, QA Automation, Selenium Automation, ERP Implementation, ARAS PLM, Azure DevOps, Cybersecurity Solutions, AI Engineering, Scalable Web Applications, React Development, Node.js Backend, Digital Transformation, Automation Frameworks',
 
   // --- ABOUT US ---
-'meta.about.title': 'About Benelux Global Solutions | Enterprise Engineering & Automation Experts',
-'meta.about.description': 'Benelux Global Solutions is an enterprise-focused software engineering firm delivering scalable web development, QA automation, ERP implementation, and cybersecurity solutions. We design secure, high-performance systems built to scale with confidence.',
-'meta.about.keywords': 'Benelux Global Solutions, Enterprise Software Engineering, QA Automation Experts, ERP Consulting, Cybersecurity Services, Selenium Automation, Azure DevOps CI/CD, Digital Transformation, Scalable Architecture, Technology Consulting',
+'meta.about.title': 'About TNI Professionals | Enterprise Engineering & Automation Experts',
+'meta.about.description': 'TNI is an enterprise-focused software engineering firm delivering scalable web development, QA automation, ERP implementation, and cybersecurity solutions. We design secure, high-performance systems built to scale with confidence.',
+'meta.about.keywords': 'TNI Professionals, Enterprise Software Engineering, QA Automation Experts, ERP Consulting, Cybersecurity Services, Selenium Automation, Azure DevOps CI/CD, Digital Transformation, Scalable Architecture, Technology Consulting',
 
  // --- CONTACT ---
-'meta.contact.title': 'Contact Benelux Global Solutions | Let’s Build Smarter Systems',
-'meta.contact.description': 'Ready to scale your business with secure, high-performance software? Contact Benelux Global Solutions to discuss web development, QA automation, ERP implementation, and cybersecurity solutions tailored to your needs.',
-'meta.contact.keywords': 'Enterprise Software Consultation, QA Automation Services, ERP Implementation Experts, Cybersecurity Consulting, Web Development Company, Digital Transformation Partner, Technology Strategy, Benelux Global Solutions',
+'meta.contact.title': 'Contact TNI Professionals | Let’s Build Smarter Systems',
+'meta.contact.description': 'Ready to scale your business with secure, high-performance software? Contact TNI Professionals to discuss web development, QA automation, ERP implementation, and cybersecurity solutions tailored to your needs.',
+'meta.contact.keywords': 'Enterprise Software Consultation, QA Automation Services, ERP Implementation Experts, Cybersecurity Consulting, Web Development Company, Digital Transformation Partner, Technology Strategy, TNI Professionals',
 
 // --- PROJECTS ---
-'meta.projects.title': 'Benelux Global Solutions | Case Studies & Enterprise Projects',
+'meta.projects.title': 'TNI Professionals | Case Studies & Enterprise Projects',
 'meta.projects.description': 'Explore our work across enterprise web platforms, QA automation frameworks, ERP integrations, and secure digital systems built for performance, scalability, and reliability.',
-'meta.projects.keywords': 'Enterprise Software Case Studies, QA Automation Frameworks, ERP Integration Projects, Cybersecurity Solutions, Scalable Web Applications, Azure DevOps CI/CD Projects, Benelux Global Solutions Portfolio',
+'meta.projects.keywords': 'Enterprise Software Case Studies, QA Automation Frameworks, ERP Integration Projects, Cybersecurity Solutions, Scalable Web Applications, Azure DevOps CI/CD Projects, TNI Professionals Portfolio',
 
   // --- 404 ---
   'meta.404.title': '404 - Page Not Found',
   'meta.404.description': 'The page you\'re looking for doesn\'t exist',
 
-  'meta.privacy.title': 'Benelux Global Solutions | Privacy Policy',
+  'meta.privacy.title': 'TNI Professionals | Privacy Policy',
   'meta.privacy.description': 'Your privacy is important to us. We value your trust and are committed to protecting your personal information.',
 
-  'meta.terms.title': 'Benelux Global Solutions | Terms of Use',
+  'meta.terms.title': 'TNI Professionals | Terms of Use',
   'meta.terms.description': 'By using our website, you agree to our terms of use.',
 
   // Footer
   'footer.contact.description': 'Interested in working with us?',
-  'footer.copyright': 'Benelux Global Solutions — ALL RIGHTS RESERVED',
+  'footer.copyright': 'TNI Professionals — ALL RIGHTS RESERVED',
   'footer.explore': 'Explore',
 
 } as const;
