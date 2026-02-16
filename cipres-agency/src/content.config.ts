@@ -9,7 +9,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    category: z.enum(['Agency', 'Branding', 'Portfolio', 'Other', 'Web Development', 'AI', 'QA Automation', 'Enterprise PLM']),
+    category: z.enum(['Agency', 'Branding', 'Portfolio', 'Other', 'Web Development', 'AI', 'QA Automation', 'Enterprise PLM', 'Cybersecurity']),
     image: z.string(),
     link: z.string().url().optional(),
     yearFinished: z.number(),
