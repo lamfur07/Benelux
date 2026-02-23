@@ -4,7 +4,7 @@ description: "Deployed a suite of modern security solutions across identity, end
 category: "Cybersecurity"
 image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1955&auto=format&fit=crop"
 # link: "https://agustincastets.vercel.app/en"
-yearFinished: 2025
+yearFinished: 2026
 timeline: "6 weeks"
 tags: ["Compliance", "Configuration", "Security Architecture", "Deployment"]
 ---
