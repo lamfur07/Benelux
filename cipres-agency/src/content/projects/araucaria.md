@@ -5,7 +5,7 @@ category: "Enterprise PLM"
 image: "/images/QA Automation.png"
 # link: "https://agustincastets.vercel.app/en"
 yearFinished: 2025
-timeline: "28 weeks"
+timeline: "20 weeks"
 tags: ["Selenium", "TestNG", "Zephyr", "Azure DevOps", "CI/CD Pipeline"]
 ---
 
